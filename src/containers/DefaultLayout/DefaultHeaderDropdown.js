@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Progress } from 'reactstrap';
 
 const propTypes = {
+  drops: PropTypes.bool,
   notif: PropTypes.bool,
   accnt: PropTypes.bool,
   tasks: PropTypes.bool,
   mssgs: PropTypes.bool,
 };
 const defaultProps = {
+  drops: false,
   notif: false,
   accnt: false,
   tasks: false,
@@ -32,6 +34,46 @@ class DefaultHeaderDropdown extends Component {
     });
   }
 
+  dropToken() {
+    const itemsCount = 120;
+    return (
+      <Dropdown nav className="d-md-down-none" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+        <DropdownToggle nav>
+          <i className="icon-drop"></i><Badge pill color="danger">{itemsCount}</Badge>
+        </DropdownToggle>
+        <DropdownMenu right>
+          <DropdownItem header tag="div" className="text-center"><strong>You have {itemsCount} Drop Tokens</strong></DropdownItem>
+          {/* <DropdownItem><i className="icon-user-follow text-success"></i> New user registered</DropdownItem>
+          <DropdownItem><i className="icon-user-unfollow text-danger"></i> User deleted</DropdownItem>
+          <DropdownItem><i className="icon-chart text-info"></i> Sales report is ready</DropdownItem>
+          <DropdownItem><i className="icon-basket-loaded text-primary"></i> New client</DropdownItem>
+          <DropdownItem><i className="icon-speedometer text-warning"></i> Server overloaded</DropdownItem>
+          <DropdownItem header tag="div" className="text-center"><strong>Server</strong></DropdownItem>
+          <DropdownItem>
+            <div className="text-uppercase mb-1">
+              <small><b>CPU Usage</b></small>
+            </div>
+            <Progress className="progress-xs" color="info" value="25" />
+            <small className="text-muted">348 Processes. 1/4 Cores.</small>
+          </DropdownItem> */}
+          <DropdownItem>
+            <div className="text-uppercase mb-1">
+              <small><b>Memory Usage</b></small>
+            </div>
+            <Progress className="progress-xs" color="warning" value={70} />
+            <small className="text-muted">11444GB/16384MB</small>
+          </DropdownItem>
+          {/* <DropdownItem>
+            <div className="text-uppercase mb-1">
+              <small><b>SSD 1 Usage</b></small>
+            </div>
+            <Progress className="progress-xs" color="danger" value={90} />
+            <small className="text-muted">243GB/256GB</small>
+          </DropdownItem> */}
+        </DropdownMenu>
+      </Dropdown>
+    );
+  }
   dropNotif() {
     const itemsCount = 5;
     return (
@@ -222,8 +264,9 @@ class DefaultHeaderDropdown extends Component {
   }
 
   render() {
-    const { notif, accnt, tasks, mssgs } = this.props;
+    const { drops, notif, accnt, tasks, mssgs } = this.props;
     return (
+        drops ? this.dropToken() :
         notif ? this.dropNotif() :
           accnt ? this.dropAccnt() :
             tasks ? this.dropTasks() :

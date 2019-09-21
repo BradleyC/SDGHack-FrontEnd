@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 
 import { AppAsideToggler, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import DefaultHeaderDropdown  from './DefaultHeaderDropdown'
-import logo from '../../assets/img/brand/logo.svg'
+// import logo from '../../assets/img/brand/logo.svg'
+import logo from '../../assets/img/brand/1F6BF.svg'
+import dropLogo from '../../assets/img/brand/1F4A7.svg'
 import sygnet from '../../assets/img/brand/sygnet.svg'
 
 const propTypes = {
@@ -25,27 +27,29 @@ class DefaultHeader extends Component {
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
           full={{ src: logo, width: 89, height: 25, alt: 'CoreUI Logo' }}
-          minimized={{ src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo' }}
+          minimized={{ src: logo, width: 30, height: 30, alt: 'CoreUI Logo' }}
         />
-        <AppSidebarToggler className="d-md-down-none" display="lg" />
+        <AppNavbarBrand
+          full={{ src: logo, width: 120, height: 120, alt: 'CoreUI Logo' }}
+          minimized={{ src: logo, width: 30, height: 30, alt: 'CoreUI Logo' }}
+        >Water Savers Go!</AppNavbarBrand>
+        {/* <AppSidebarToggler className="d-md-down-none" display="lg" /> */}
         <Nav className="d-md-down-none" navbar>
           <NavItem className="px-3">
-            <NavLink to="/dashboard" className="nav-link" >Dashboard</NavLink>
+            <NavLink to="/dashboard" className="nav-link" >My Dashboard</NavLink>
           </NavItem>
           <NavItem className="px-3">
-            <NavLink to="/users" className="nav-link">Users</NavLink>
-          </NavItem>
-          <NavItem className="px-3">
-            <NavLink to="#" className="nav-link">Settings</NavLink>
+            <NavLink to="/leaderboard" className="nav-link">Leaderboard</NavLink>
           </NavItem>
         </Nav>
         <Nav className="ml-auto" navbar>
-          <DefaultHeaderDropdown notif/>
+          <DefaultHeaderDropdown drops/>
+          {/* <DefaultHeaderDropdown notif/>
           <DefaultHeaderDropdown tasks/>
           <DefaultHeaderDropdown mssgs/>
           <NavItem className="d-md-down-none">
             <NavLink to="#" className="nav-link"><i className="icon-location-pin"></i></NavLink>
-          </NavItem>
+          </NavItem> */}
           <DefaultHeaderDropdown onLogout={this.props.onLogout} accnt/>
         </Nav>
         <AppAsideToggler className="d-md-down-none" />
