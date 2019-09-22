@@ -1,21 +1,16 @@
 import React, { Component, lazy, Suspense } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 import {
-  Badge,
-  Button,
   ButtonDropdown,
   ButtonGroup,
-  ButtonToolbar,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-  Col,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
   Progress,
   Row,
   Table,
@@ -23,7 +18,6 @@ import {
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui-pro/dist/js/coreui-utilities'
 
-const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
 
 const brandPrimary = getStyle('--primary')
 const brandSuccess = getStyle('--success')
@@ -359,99 +353,6 @@ const sparklineChartOpts = {
   },
 };
 
-// Main Chart
-
-//Random Numbers
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-var elements = 27;
-var data1 = [];
-var data2 = [];
-var data3 = [];
-
-for (var i = 0; i <= elements; i++) {
-  data1.push(random(50, 200));
-  data2.push(random(80, 100));
-  data3.push(65);
-}
-
-const mainChart = {
-  labels: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-  datasets: [
-    {
-      label: 'My First dataset',
-      backgroundColor: hexToRgba(brandInfo, 10),
-      borderColor: brandInfo,
-      pointHoverBackgroundColor: '#fff',
-      borderWidth: 2,
-      data: data1,
-    },
-    {
-      label: 'My Second dataset',
-      backgroundColor: 'transparent',
-      borderColor: brandSuccess,
-      pointHoverBackgroundColor: '#fff',
-      borderWidth: 2,
-      data: data2,
-    },
-    {
-      label: 'My Third dataset',
-      backgroundColor: 'transparent',
-      borderColor: brandDanger,
-      pointHoverBackgroundColor: '#fff',
-      borderWidth: 1,
-      borderDash: [8, 5],
-      data: data3,
-    },
-  ],
-};
-
-const mainChartOpts = {
-  tooltips: {
-    enabled: false,
-    custom: CustomTooltips,
-    intersect: true,
-    mode: 'index',
-    position: 'nearest',
-    callbacks: {
-      labelColor: function(tooltipItem, chart) {
-        return { backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor }
-      }
-    }
-  },
-  maintainAspectRatio: false,
-  legend: {
-    display: false,
-  },
-  scales: {
-    xAxes: [
-      {
-        gridLines: {
-          drawOnChartArea: false,
-        },
-      }],
-    yAxes: [
-      {
-        ticks: {
-          beginAtZero: true,
-          maxTicksLimit: 5,
-          stepSize: Math.ceil(250 / 5),
-          max: 250,
-        },
-      }],
-  },
-  elements: {
-    point: {
-      radius: 0,
-      hitRadius: 10,
-      hoverRadius: 4,
-      hoverBorderWidth: 3,
-    },
-  },
-};
-
 class Leaderboard extends Component {
   constructor(props) {
     super(props);
@@ -484,6 +385,103 @@ class Leaderboard extends Component {
     return (
       <div className="animated fadeIn">
         <Row>
+          <Col xs="12" sm="6" lg="3">
+            <Card className="text-white bg-info">
+              <CardBody className="pb-0">
+                <ButtonGroup className="float-right">
+                  <ButtonDropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
+                    <DropdownToggle caret className="p-0" color="transparent">
+                      <i className="icon-settings"></i>
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem>Action</DropdownItem>
+                      <DropdownItem>Another action</DropdownItem>
+                      <DropdownItem disabled>Disabled action</DropdownItem>
+                      <DropdownItem>Something else here</DropdownItem>
+                    </DropdownMenu>
+                  </ButtonDropdown>
+                </ButtonGroup>
+                <div className="text-value">75</div>
+                <div>Competition Membership</div>
+                <div className="chart-wrapper mt-3" style={{ height: '70px' }}>
+                  <Line data={cardChartData2} options={cardChartOpts2} height={70} />
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col xs="12" sm="6" lg="3">
+            <Card className="text-white bg-primary">
+              <CardBody className="pb-0">
+                <ButtonGroup className="float-right">
+                  <Dropdown id='card2' isOpen={this.state.card2} toggle={() => { this.setState({ card2: !this.state.card2 }); }}>
+                    <DropdownToggle className="p-0" color="transparent">
+                      <i className="icon-location-pin"></i>
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem>Action</DropdownItem>
+                      <DropdownItem>Another action</DropdownItem>
+                      <DropdownItem>Something else here</DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                </ButtonGroup>
+                <div className="text-value">200</div>
+                <div>Bounties Won</div>
+                <div className="chart-wrapper mt-3" style={{ height: '70px' }}>
+                  <Line data={cardChartData1} options={cardChartOpts1} height={70} />
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+
+          <Col xs="12" sm="6" lg="3">
+            <Card className="text-white bg-warning">
+              <CardBody className="pb-0">
+                <ButtonGroup className="float-right">
+                  <Dropdown id='card3' isOpen={this.state.card3} toggle={() => { this.setState({ card3: !this.state.card3 }); }}>
+                    <DropdownToggle caret className="p-0" color="transparent">
+                      <i className="icon-settings"></i>
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem>Action</DropdownItem>
+                      <DropdownItem>Another action</DropdownItem>
+                      <DropdownItem>Something else here</DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                </ButtonGroup>
+                <div className="text-value">850,000</div>
+                <div>Water Savings</div>
+              </CardBody>
+              <div className="chart-wrapper mt-3" style={{ height: '70px' }}>
+                <Line data={cardChartData3} options={cardChartOpts3} height={70} />
+              </div>
+            </Card>
+          </Col>
+
+          <Col xs="12" sm="6" lg="3">
+            <Card className="text-white bg-danger">
+              <CardBody className="pb-0">
+                <ButtonGroup className="float-right">
+                  <ButtonDropdown id='card4' isOpen={this.state.card4} toggle={() => { this.setState({ card4: !this.state.card4 }); }}>
+                    <DropdownToggle caret className="p-0" color="transparent">
+                      <i className="icon-settings"></i>
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem>Action</DropdownItem>
+                      <DropdownItem>Another action</DropdownItem>
+                      <DropdownItem>Something else here</DropdownItem>
+                    </DropdownMenu>
+                  </ButtonDropdown>
+                </ButtonGroup>
+                <div className="text-value">180,000</div>
+                <div>Tokens Balances</div>
+              </CardBody>
+              <div className="chart-wrapper mt-3 mx-3" style={{ height: '70px' }}>
+                <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
+              </div>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
           <Col>
             <Card>
               <CardHeader>
@@ -496,9 +494,7 @@ class Leaderboard extends Component {
                   <tr>
                     <th className="text-center"><i className="icon-people"></i></th>
                     <th>User</th>
-                    <th className="text-center">Country</th>
-                    <th>Usage</th>
-                    <th className="text-center">Payment Method</th>
+                    <th>Savings</th>
                     <th>Activity</th>
                   </tr>
                   </thead>
@@ -507,7 +503,7 @@ class Leaderboard extends Component {
                     <td className="text-center">
                       <div className="avatar">
                         <img src={'assets/img/avatars/1.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
-                        <span className="avatar-status badge-success"></span>
+                        <span className="badge-success">1st</span>
                       </div>
                     </td>
                     <td>
@@ -516,33 +512,27 @@ class Leaderboard extends Component {
                         <span>New</span> | Registered: Jan 1, 2015
                       </div>
                     </td>
-                    <td className="text-center">
-                      <i className="flag-icon flag-icon-us h4 mb-0" title="us" id="us"></i>
-                    </td>
                     <td>
                       <div className="clearfix">
                         <div className="float-left">
-                          <strong>50%</strong>
+                          <strong>12%</strong>
                         </div>
                         <div className="float-right">
                           <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
                         </div>
                       </div>
-                      <Progress className="progress-xs" color="success" value="50" />
-                    </td>
-                    <td className="text-center">
-                      <i className="fa fa-cc-mastercard" style={{ fontSize: 24 + 'px' }}></i>
+                      <Progress className="progress-xs" color="info" value="12" />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>10 sec ago</strong>
+                      <div className="small text-muted">Bounties Won</div>
+                      <strong>8</strong>
                     </td>
                   </tr>
                   <tr>
                     <td className="text-center">
                       <div className="avatar">
                         <img src={'assets/img/avatars/2.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
-                        <span className="avatar-status badge-danger"></span>
+                        <span className="badge-warning">2nd</span>
                       </div>
                     </td>
                     <td>
@@ -551,9 +541,6 @@ class Leaderboard extends Component {
 
                         <span>Recurring</span> | Registered: Jan 1, 2015
                       </div>
-                    </td>
-                    <td className="text-center">
-                      <i className="flag-icon flag-icon-br h4 mb-0" title="br" id="br"></i>
                     </td>
                     <td>
                       <div className="clearfix">
@@ -566,19 +553,16 @@ class Leaderboard extends Component {
                       </div>
                       <Progress className="progress-xs" color="info" value="10" />
                     </td>
-                    <td className="text-center">
-                      <i className="fa fa-cc-visa" style={{ fontSize: 24 + 'px' }}></i>
-                    </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>5 minutes ago</strong>
+                      <div className="small text-muted">Bounties Won</div>
+                      <strong>4</strong>
                     </td>
                   </tr>
                   <tr>
                     <td className="text-center">
                       <div className="avatar">
                         <img src={'assets/img/avatars/3.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
-                        <span className="avatar-status badge-warning"></span>
+                        <span className="badge-secondary">3rd</span>
                       </div>
                     </td>
                     <td>
@@ -587,26 +571,20 @@ class Leaderboard extends Component {
                         <span>New</span> | Registered: Jan 1, 2015
                       </div>
                     </td>
-                    <td className="text-center">
-                      <i className="flag-icon flag-icon-in h4 mb-0" title="in" id="in"></i>
-                    </td>
                     <td>
                       <div className="clearfix">
                         <div className="float-left">
-                          <strong>74%</strong>
+                          <strong>08%</strong>
                         </div>
                         <div className="float-right">
                           <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
                         </div>
                       </div>
-                      <Progress className="progress-xs" color="warning" value="74" />
-                    </td>
-                    <td className="text-center">
-                      <i className="fa fa-cc-stripe" style={{ fontSize: 24 + 'px' }}></i>
+                      <Progress className="progress-xs" color="info" value="8" />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>1 hour ago</strong>
+                      <div className="small text-muted">Bounties Won</div>
+                      <strong>4</strong>
                     </td>
                   </tr>
                   <tr>
@@ -622,33 +600,27 @@ class Leaderboard extends Component {
                         <span>New</span> | Registered: Jan 1, 2015
                       </div>
                     </td>
-                    <td className="text-center">
-                      <i className="flag-icon flag-icon-fr h4 mb-0" title="fr" id="fr"></i>
-                    </td>
                     <td>
                       <div className="clearfix">
                         <div className="float-left">
-                          <strong>98%</strong>
+                          <strong>05</strong>
                         </div>
                         <div className="float-right">
                           <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
                         </div>
                       </div>
-                      <Progress className="progress-xs" color="danger" value="98" />
-                    </td>
-                    <td className="text-center">
-                      <i className="fa fa-paypal" style={{ fontSize: 24 + 'px' }}></i>
+                      <Progress className="progress-xs" color="info" value="5" />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>Last month</strong>
+                      <div className="small text-muted">Bounties Won</div>
+                      <strong>2</strong>
                     </td>
                   </tr>
                   <tr>
                     <td className="text-center">
                       <div className="avatar">
                         <img src={'assets/img/avatars/5.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
-                        <span className="avatar-status badge-success"></span>
+                        <span className="avatar-status badge-secondary"></span>
                       </div>
                     </td>
                     <td>
@@ -657,33 +629,27 @@ class Leaderboard extends Component {
                         <span>New</span> | Registered: Jan 1, 2015
                       </div>
                     </td>
-                    <td className="text-center">
-                      <i className="flag-icon flag-icon-es h4 mb-0" title="es" id="es"></i>
-                    </td>
                     <td>
                       <div className="clearfix">
                         <div className="float-left">
-                          <strong>22%</strong>
+                          <strong>03%</strong>
                         </div>
                         <div className="float-right">
                           <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
                         </div>
                       </div>
-                      <Progress className="progress-xs" color="info" value="22" />
-                    </td>
-                    <td className="text-center">
-                      <i className="fa fa-google-wallet" style={{ fontSize: 24 + 'px' }}></i>
+                      <Progress className="progress-xs" color="info" value="3" />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>Last week</strong>
+                      <div className="small text-muted">Bounties Won</div>
+                      <strong>0</strong>
                     </td>
                   </tr>
                   <tr>
                     <td className="text-center">
                       <div className="avatar">
                         <img src={'assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
-                        <span className="avatar-status badge-danger"></span>
+                        <span className="avatar-status badge-secondary"></span>
                       </div>
                     </td>
                     <td>
@@ -692,26 +658,20 @@ class Leaderboard extends Component {
                         <span>New</span> | Registered: Jan 1, 2015
                       </div>
                     </td>
-                    <td className="text-center">
-                      <i className="flag-icon flag-icon-pl h4 mb-0" title="pl" id="pl"></i>
-                    </td>
                     <td>
                       <div className="clearfix">
                         <div className="float-left">
-                          <strong>43%</strong>
+                          <strong>02%</strong>
                         </div>
                         <div className="float-right">
                           <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
                         </div>
                       </div>
-                      <Progress className="progress-xs" color="success" value="43" />
-                    </td>
-                    <td className="text-center">
-                      <i className="fa fa-cc-amex" style={{ fontSize: 24 + 'px' }}></i>
+                      <Progress className="progress-xs" color="info" value="2" />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>Yesterday</strong>
+                      <div className="small text-muted">Bounties Won</div>
+                      <strong>0</strong>
                     </td>
                   </tr>
                   </tbody>

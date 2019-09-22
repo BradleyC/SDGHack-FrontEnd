@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import Web3 from 'web3';
 import PropTypes from 'prop-types';
 import { Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Progress } from 'reactstrap';
+
+import abi from '../../assets/Cirrus.json'
 
 const propTypes = {
   drops: PropTypes.bool,
@@ -25,6 +28,7 @@ class DefaultHeaderDropdown extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: false,
+      balance: 0
     };
   }
 
@@ -33,13 +37,24 @@ class DefaultHeaderDropdown extends Component {
       dropdownOpen: !this.state.dropdownOpen,
     });
   }
+  async componentDidMount() {
+    var web3 = new Web3(window.web3.currentProvider);
+    console.log(web3);
+    console.log(web3.eth.accounts);
+    console.log(web3.eth.accounts.currentProvider);
+    var contract = new web3.eth.Contract(abi.abi, abi.networks[1337].address)
+    var balance = await contract.methods
+      .balanceOf('0x0810A0E7A850d0eC9a3A1738D35613F52B9399b0')
+      .call()
+    this.setState({ balance })
+  }
 
   dropToken() {
     const itemsCount = 120;
     return (
       <Dropdown nav className="d-md-down-none" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle nav>
-          <i className="icon-drop"></i><Badge pill color="danger">{itemsCount}</Badge>
+          <i className="icon-drop"></i><Badge pill color="info">{this.state.balance}</Badge>
         </DropdownToggle>
         <DropdownMenu right>
           <DropdownItem header tag="div" className="text-center"><strong>You have {itemsCount} Drop Tokens</strong></DropdownItem>

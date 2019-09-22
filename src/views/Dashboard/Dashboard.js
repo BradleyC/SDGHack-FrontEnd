@@ -931,32 +931,6 @@ class Dashboard extends Component {
     return (
       <div className="animated fadeIn">
         <Row>
-          <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-info">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>Action</DropdownItem>
-                      <DropdownItem>Another action</DropdownItem>
-                      <DropdownItem disabled>Disabled action</DropdownItem>
-                      <DropdownItem>Something else here</DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <div className="text-value">9.823</div>
-                <div>Members online</div>
-                <div className="chart-wrapper mt-3" style={{ height: '70px' }}>
-                  <Line data={cardChartData2} options={cardChartOpts2} height={70} />
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-        <Row>
           <Col>
             <Card>
               <CardBody>
@@ -983,29 +957,19 @@ class Dashboard extends Component {
               <CardFooter>
                 <Row className="text-center">
                   <Col sm={12} md className="mb-sm-2 mb-0">
-                    <div className="text-muted">Visits</div>
-                    <strong>29.703 Users (40%)</strong>
-                    <Progress className="progress-xs mt-2" color="success" value="40" />
-                  </Col>
-                  <Col sm={12} md className="mb-sm-2 mb-0 d-md-down-none">
-                    <div className="text-muted">Unique</div>
-                    <strong>24.093 Users (20%)</strong>
-                    <Progress className="progress-xs mt-2" color="info" value="20" />
+                    <div className="text-muted">Personal Goals</div>
+                    <strong>200 L month/Month (04%)</strong>
+                    <Progress className="progress-xs mt-2" color="info" value="50" />
                   </Col>
                   <Col sm={12} md className="mb-sm-2 mb-0">
-                    <div className="text-muted">Pageviews</div>
-                    <strong>78.706 Views (60%)</strong>
-                    <Progress className="progress-xs mt-2" color="warning" value="60" />
+                    <div className="text-muted">Competition</div>
+                    <strong>200 L month/Month (04%)</strong>
+                    <Progress className="progress-xs mt-2" color="info" value="25" />
                   </Col>
                   <Col sm={12} md className="mb-sm-2 mb-0">
-                    <div className="text-muted">New Users</div>
-                    <strong>22.123 Users (80%)</strong>
-                    <Progress className="progress-xs mt-2" color="danger" value="80" />
-                  </Col>
-                  <Col sm={12} md className="mb-sm-2 mb-0 d-md-down-none">
-                    <div className="text-muted">Bounce Rate</div>
-                    <strong>Average Rate (40.15%)</strong>
-                    <Progress className="progress-xs mt-2" color="primary" value="40" />
+                    <div className="text-muted">Bounties</div>
+                    <strong>4 Collected</strong>
+                    <Progress className="progress-xs mt-2" color="info" value="15%" />
                   </Col>
                 </Row>
               </CardFooter>
@@ -1013,7 +977,7 @@ class Dashboard extends Component {
           </Col>
         </Row>
 
-        <Row>
+        {/* <Row>
           <Col xs="6" sm="6" lg="3">
             <Suspense fallback={this.loading()}>
               <Widget03 dataBox={() => ({ variant: 'facebook', friends: '89k', feeds: '459' })} >
@@ -1034,7 +998,7 @@ class Dashboard extends Component {
             </Suspense>
           </Col>
 
-        </Row>
+        </Row> */}
 
       </div>
     );
