@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
+import Web3 from 'web3';
 import PropTypes from 'prop-types';
 import { Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Progress } from 'reactstrap';
 
+import abi from '../../assets/Cirrus.json'
+
 const propTypes = {
+  drops: PropTypes.bool,
   notif: PropTypes.bool,
   accnt: PropTypes.bool,
   tasks: PropTypes.bool,
   mssgs: PropTypes.bool,
 };
 const defaultProps = {
+  drops: false,
   notif: false,
   accnt: false,
   tasks: false,
@@ -23,6 +28,7 @@ class DefaultHeaderDropdown extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: false,
+      balance: 0
     };
   }
 
@@ -31,7 +37,58 @@ class DefaultHeaderDropdown extends Component {
       dropdownOpen: !this.state.dropdownOpen,
     });
   }
+  async componentDidMount() {
+    var web3 = new Web3(window.web3.currentProvider);
+    console.log(web3);
+    console.log(web3.eth.accounts);
+    console.log(web3.eth.accounts.currentProvider);
+    var contract = new web3.eth.Contract(abi.abi, abi.networks[1337].address)
+    var balance = await contract.methods
+      .balanceOf('0x0810A0E7A850d0eC9a3A1738D35613F52B9399b0')
+      .call()
+    this.setState({ balance })
+  }
 
+  dropToken() {
+    const itemsCount = 120;
+    return (
+      <Dropdown nav className="d-md-down-none" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+        <DropdownToggle nav>
+          <i className="icon-drop"></i><Badge pill color="info">{this.state.balance}</Badge>
+        </DropdownToggle>
+        <DropdownMenu right>
+          <DropdownItem header tag="div" className="text-center"><strong>You have {itemsCount} Drop Tokens</strong></DropdownItem>
+          {/* <DropdownItem><i className="icon-user-follow text-success"></i> New user registered</DropdownItem>
+          <DropdownItem><i className="icon-user-unfollow text-danger"></i> User deleted</DropdownItem>
+          <DropdownItem><i className="icon-chart text-info"></i> Sales report is ready</DropdownItem>
+          <DropdownItem><i className="icon-basket-loaded text-primary"></i> New client</DropdownItem>
+          <DropdownItem><i className="icon-speedometer text-warning"></i> Server overloaded</DropdownItem>
+          <DropdownItem header tag="div" className="text-center"><strong>Server</strong></DropdownItem>
+          <DropdownItem>
+            <div className="text-uppercase mb-1">
+              <small><b>CPU Usage</b></small>
+            </div>
+            <Progress className="progress-xs" color="info" value="25" />
+            <small className="text-muted">348 Processes. 1/4 Cores.</small>
+          </DropdownItem> */}
+          <DropdownItem>
+            <div className="text-uppercase mb-1">
+              <small><b>Memory Usage</b></small>
+            </div>
+            <Progress className="progress-xs" color="warning" value={70} />
+            <small className="text-muted">11444GB/16384MB</small>
+          </DropdownItem>
+          {/* <DropdownItem>
+            <div className="text-uppercase mb-1">
+              <small><b>SSD 1 Usage</b></small>
+            </div>
+            <Progress className="progress-xs" color="danger" value={90} />
+            <small className="text-muted">243GB/256GB</small>
+          </DropdownItem> */}
+        </DropdownMenu>
+      </Dropdown>
+    );
+  }
   dropNotif() {
     const itemsCount = 5;
     return (
@@ -222,8 +279,9 @@ class DefaultHeaderDropdown extends Component {
   }
 
   render() {
-    const { notif, accnt, tasks, mssgs } = this.props;
+    const { drops, notif, accnt, tasks, mssgs } = this.props;
     return (
+        drops ? this.dropToken() :
         notif ? this.dropNotif() :
           accnt ? this.dropAccnt() :
             tasks ? this.dropTasks() :
